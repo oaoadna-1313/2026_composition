@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -338,7 +338,7 @@
                 </div>
 
                 <div id="ai-error" class="hidden mt-6 bg-red-50 border-l-4 border-danger p-4 text-danger rounded-r-lg">
-                    <p>抱歉，教練目前遇到連線問題，請確認 API 連線狀態！</p>
+                    <p>抱歉，教練目前遇到連線問題，請確認您的 Google Apps Script 部署或稍後再試一次！</p>
                 </div>
                 
                 <!-- 我的文章累積區 -->
@@ -781,12 +781,8 @@
                  * ==========================================
                  */
                 
-                // 您的 GAS 網址 (部署給學生時，請解除此行註解，並填寫您的網址)
-                // const apiUrl = "https://script.google.com/macros/s/AKfycbwTX1R33gA3Sz_gPOJ-FXRRK5buWGHZvybTsNUKAD57y48sSJVdjAiaRMzbuxqRJoUtLA/exec"; 
-                
-                // 預覽環境內建測試通道 (部署給學生時，請將以下兩行註解掉)
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                // ⚠️ 您的 Google Apps Script 網址
+                const apiUrl = "https://script.google.com/macros/s/AKfycbwTX1R33gA3Sz_gPOJ-FXRRK5buWGHZvybTsNUKAD57y48sSJVdjAiaRMzbuxqRJoUtLA/exec";
 
                 try {
                     const result = await fetchWithRetry(apiUrl, payload);
@@ -804,7 +800,7 @@
                     console.error('AI Coach Error:', error);
                     aiLoading.classList.add('hidden');
                     aiError.classList.remove('hidden');
-                    aiError.innerHTML = `<p>抱歉，教練目前遇到連線問題：<br><strong class="text-sm">${error.message}</strong></p>`;
+                    aiError.innerHTML = `<p>抱歉，教練目前遇到連線問題：<br><strong class="text-sm">${error.message}</strong><br>👉 請確認您的 GAS 部署權限為「所有人」，或按 F12 查看 Console 錯誤。</p>`;
                 } finally {
                     btnAskAI.disabled = false;
                     btnAskAI.classList.remove('opacity-50', 'cursor-not-allowed');
